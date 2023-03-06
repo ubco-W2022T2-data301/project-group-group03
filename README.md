@@ -23,7 +23,7 @@ Hello, Im a second year poli sci, philosphy and economics major who also has a k
 Cyrus Tung
 - Person 3: one sentence about you!
 Noah Chan
-
+Hi, I am an international student from Hong Kong. Im in second year and willing to major in computer science.
 ## Images
 
 {You should use this area to add a screenshot of an interesting plot, or of your dashboard}
