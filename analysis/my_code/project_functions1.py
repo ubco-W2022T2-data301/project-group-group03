@@ -2,19 +2,20 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "a706c139-ee3a-4ec4-b7a5-b1d61ecc2d73",
+   "execution_count": 11,
+   "id": "4227d341-c8c7-4ea8-8ab5-c7aa41fbb398",
    "metadata": {},
    "outputs": [],
    "source": [
     "import pandas as pd\n",
-    "import numpy as np"
+    "import numpy as np\n",
+    "import math"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "b7025bf1-33ef-4cea-9294-53e51d328f81",
+   "execution_count": 15,
+   "id": "7621668a-1371-4e00-b015-5654bd53e9bb",
    "metadata": {},
    "outputs": [
     {
@@ -253,16 +254,14 @@
        "[222 rows x 11 columns]"
       ]
      },
-     "execution_count": 6,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "df = pd.read_csv('../../data/processed/processeddata.csv')\n",
-    "\n",
-    "def preprocess_data(df, columns_to_drop):\n",
-    "    processed_df = (\n",
+    "def load_and_process(df, columns_to_drop):\n",
+    "    load_and_process = (\n",
     "        df\n",
     "        .drop(columns=columns_to_drop)  # Drop unnecessary columns\n",
     "        .query(\"Year >= 2020 & Year < 2021\")  # Filter data for years 2020\n",
@@ -276,27 +275,65 @@
     "        .round(0)  # Round the summary statistics to the nearest whole number\n",
     "        .sort_values(by=['Year', 'Subject', 'Course'])  # Sort the DataFrame by year, subject, and course\n",
     "        .reset_index()  # Reset the index\n",
+    "        .fillna(0)  # Replace NaN values with 0\n",
     "    )\n",
-    "# Wrap your method chain in a function\n",
-    "    return processed_df\n",
+    "    return load_and_process\n",
+    "\n",
     "# Load the dataset\n",
     "df = pd.read_csv('../../data/processed/processeddata.csv')\n",
-    "\n",
     "\n",
     "# Define the columns to drop\n",
     "columns_to_drop = ['Section']\n",
     "\n",
     "# Call the preprocess_data function\n",
-    "processed_df = preprocess_data(df, columns_to_drop)\n",
+    "load_and_process = load_and_process(df, columns_to_drop)\n",
     "\n",
     "# Print the processed DataFrame\n",
-    "processed_df"
+    "def load_and_process(df, columns_to_drop):\n",
+    "    load_and_process = (\n",
+    "        df\n",
+    "        .drop(columns=columns_to_drop)  # Drop unnecessary columns\n",
+    "        .query(\"Year >= 2020 & Year < 2021\")  # Filter data for years 2020\n",
+    "        .groupby(['Year', 'Subject', 'Course'])  # Group data by year, subject, and course\n",
+    "        .agg({\n",
+    "            'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades\n",
+    "            'Median': ['mean', 'median'],  # Calculate the mean and median of the median grades\n",
+    "            'Percentile (25)': ['mean', 'median'],  # Calculate the mean and median of the 25th percentile\n",
+    "            'Percentile (75)': ['mean', 'median'],  # Calculate the mean and median of the 75th percentile\n",
+    "        })\n",
+    "        .round(0)  # Round the summary statistics to the nearest whole number\n",
+    "        .sort_values(by=['Year', 'Subject', 'Course'])  # Sort the DataFrame by year, subject, and course\n",
+    "        .reset_index()  # Reset the index\n",
+    "        .fillna(0)  # Replace NaN values with 0\n",
+    "    )\n",
+    "    return load_and_process\n",
+    "\n",
+    "# Load the dataset\n",
+    "df = pd.read_csv('../../data/processed/processeddata.csv')\n",
+    "\n",
+    "# Define the columns to drop\n",
+    "columns_to_drop = ['Section']\n",
+    "\n",
+    "# Call the preprocess_data function\n",
+    "load_and_process = load_and_process(df, columns_to_drop)\n",
+    "\n",
+    "# Print the processed DataFrame\n",
+    "load_and_process\n",
+    "\n"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "15736242-b7f4-47c3-9798-0e081ac882f0",
+   "id": "563f9e99-e8de-4d87-905b-446249eaa40d",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a5e847ac-d98a-40ee-8b17-f6652272cf66",
    "metadata": {},
    "outputs": [],
    "source": []
