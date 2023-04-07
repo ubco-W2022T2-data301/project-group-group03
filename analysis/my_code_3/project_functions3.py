@@ -1,3 +1,8 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 def load_n_process(df):
     df = pd.read_csv(file_path)  # Read the CSV file 
     new_df = (
