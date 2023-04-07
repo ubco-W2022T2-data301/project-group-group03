@@ -1,4 +1,5 @@
-def load_and_process(df):
+def load_n_process(df):
+    df = pd.read_csv(file_path)  # Read the CSV file 
     new_df = (
         df
         .drop(columns=['Section', 'Session'])  # Drop unnecessary columns
