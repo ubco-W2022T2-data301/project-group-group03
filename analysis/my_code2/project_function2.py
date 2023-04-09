@@ -11,8 +11,7 @@ def load_and_process(file_path, columns_to_drop):
         .agg({
             'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades
             'Median': ['mean', 'median'],  # Calculate the mean and median of the median grades
-            'Percentile (25)': ['mean', 'median'],  # Calculate the mean and median of the 25th percentile
-            'Percentile (75)': ['mean', 'median'],  # Calculate the mean and median of the 75th percentile
+            '<50': lambda x: sum(x) / len(x)  # Calculate the failure rate
         })
         .round(0)  # Round the summary statistics to the nearest whole number
         .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])  # Sort the DataFrame by year, campus, subject, and course
