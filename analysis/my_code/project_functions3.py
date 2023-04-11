@@ -19,5 +19,6 @@ def load_n_process(file_path):
         .reset_index(drop=True)  # Reset the index
         .rename(columns={'Avg': 'Average'})  # Rename the "Avg" column to "Average"
     )
-    
+    new_df['Avg_25_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.25)).values
+    new_df['Avg_75_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.75)).values
     return new_df
