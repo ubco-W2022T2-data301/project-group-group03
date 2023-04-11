@@ -12,7 +12,7 @@ def load_and_process(file_path):
              Median=('Avg', 'median'),
              Lower_Quartile=('Avg', lambda x: x.quantile(0.25)),
              Upper_Quartile=('Avg', lambda x: x.quantile(0.75)))
-        .round({'Mean': 0, 'Median': 0, 'Lower_Quartile': 1, 'Upper_Quartile': 1})
+        .round({'Mean': 1, 'Median': 1, 'Lower_Quartile': 1, 'Upper_Quartile': 1})
         .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])
         .reset_index()
         .fillna(0)
