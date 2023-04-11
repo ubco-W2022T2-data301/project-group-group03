@@ -18,4 +18,6 @@ def load_and_process(file_path):
         .fillna(0)
     )
 
+    new_df.rename(columns={'Lower_Quartile': 'Lower Quartile', 'Upper_Quartile': 'Upper Quartile'}, inplace=True)
+
     return new_df
