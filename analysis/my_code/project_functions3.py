@@ -17,4 +17,4 @@ def load_n_process(file_path):
     )
     new_df['Avg_25_percentile'] = df['Average'].apply(lambda x: x.quantile(0.25)).values
     new_df['Avg_75_percentile'] = df['Average'].apply(lambda x: x.quantile(0.75)).values
-return new_df
+    return new_df
