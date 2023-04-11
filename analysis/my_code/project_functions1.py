@@ -2,23 +2,29 @@ import pandas as pd
 import numpy as np
 
 def load_and_process(file_path, columns_to_drop):
-    df = pd.read_csv(file_path)  # Read the CSV file
+    df = pd.read_csv(file_path)
+    
+    # Drop unnecessary columns
+    df = df.drop(columns=columns_to_drop)
+    
+    # Group data by year, campus, subject, and course
+    grouped_data = df.groupby(['Year', 'Campus', 'Subject', 'Course'])
+    
+    # Calculate the new columns based on the 'Avg' column
     processed_data = (
-        df
-        .query('Year >= 2018 & Year <= 2021')  # Filter data for years 2018-2021
-        .drop(columns=columns_to_drop)  # Drop unnecessary columns
-        .groupby(['Year', 'Campus', 'Subject', 'Course'])  # Group data by year, campus, subject, and course
-        .agg({
-            'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades
-            'Median': ['mean', 'median'],  # Calculate the mean and median of the median grades
-            'Percentile (25)': ['mean', 'median'],  # Calculate the mean and median of the 25th percentile
-            'Percentile (75)': ['mean', 'median'],  # Calculate the mean and median of the 75th percentile
-        })
-        .round(0)  # Round the summary statistics to the nearest whole number
-        .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])  # Sort the DataFrame by year, campus, subject, and course
-        .reset_index()  # Reset the index
-        .fillna(0)  # Replace NaN values with 0
+        grouped_data
+        .agg(Avg_mean=('Avg', 'mean'),
+             Avg_median=('Avg', 'median'))
+        .round(0)
+        .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])
+        .reset_index()
+        .fillna(0)
     )
+
+    # Calculate the 25th and 75th percentiles
+    processed_data['Avg_25_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.25)).values
+    processed_data['Avg_75_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.75)).values
+
     return processed_data
 
 
