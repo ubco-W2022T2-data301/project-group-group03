@@ -1,25 +1,32 @@
 import pandas as pd
 import numpy as np
 
-def load_n_process(file_path):
-    df = pd.read_csv(file_path)  # Read the CSV file 
+def load_and_process(file_path):
+    df = pd.read_csv(file_path)
+    # Drop unnecessary columns
+    df = df.drop(columns=columns_to_drop)
 
-    grouped_df = df.drop(columns=['Section', 'Session']).groupby(['Year', 'Subject', 'Course'], as_index=False)
-
+    # Calculate the new columns based on the 'Avg' column
     new_df = (
-        grouped_df
-        .agg({
-            'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades
-        })
-        .round(0)  # Round the summary statistics to the nearest whole number
-        .sort_values(by=['Year', 'Subject', 'Course'])  # Sort the DataFrame by year, subject, and course
-        .reset_index(drop=True)  # Reset the index
-        .rename(columns={'Avg': 'Average'})  # Rename the "Avg" column to "Average"
+        df
+        .groupby(['Year','Campus','Subject','Course'])
+        .agg(Avg_mean=('Avg', 'mean'),
+             Avg_median=('Avg', 'median'))
+        .round(0)
+        .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])
+        .reset_index()
+        .fillna(0)
     )
 
-    quartiles = grouped_df['Avg'].quantile([0.25, 0.75]).unstack(level=3).rename(columns={0.25: 'Avg_25_percentile', 0.75: 'Avg_75_percentile'})
-    
-    new_df['Avg_25_percentile'] = quartiles['Avg_25_percentile'].values
-    new_df['Avg_75_percentile'] = quartiles['Avg_75_percentile'].values
+    # Calculate the 25th and 75th percentiles
+    new_df['Avg_25_percentile'] = df['Avg'].apply(lambda x: x.quantile(0.25)).values
+    new_df['Avg_75_percentile'] = df['Avg'].apply(lambda x: x.quantile(0.75)).values
 
     return new_df
+
+
+
+
+
+
+
