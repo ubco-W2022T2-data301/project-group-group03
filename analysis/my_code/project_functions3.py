@@ -11,14 +11,12 @@ def load_n_process(file_path):
         .groupby(['Year', 'Subject', 'Course'], as_index=False)  # Group data by year, subject, course, title, and professor
         .agg({
             'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades
-            'Percentile (25)': 'quantile',  # Calculate the 25th percentile of the Reported column
-            'Percentile (75)': 'quantile',  # Calculate the 75th percentile of the Reported column
         })
         .round(0)  # Round the summary statistics to the nearest whole number
         .sort_values(by=['Year', 'Subject', 'Course'])  # Sort the DataFrame by year, subject, and course
         .reset_index(drop=True)  # Reset the index
         .rename(columns={'Avg': 'Average'})  # Rename the "Avg" column to "Average"
     )
-    new_df['Avg_25_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.25)).values
-    new_df['Avg_75_percentile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.75)).values
+    new_df['Lower Quartile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.25)).values
+    new_df['Upper Quartile'] = grouped_data['Avg'].apply(lambda x: x.quantile(0.75)).values
     return new_df
