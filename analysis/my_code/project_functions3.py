@@ -2,25 +2,21 @@ import pandas as pd
 
 def load_n_process(file_path):
     df = pd.read_csv(file_path)  # Read the CSV file 
+    grouped_df = df.drop(columns=['Section', 'Session']).groupby(['Year', 'Subject', 'Course'], as_index=False)
+    
+    summary_stats = grouped_df.agg({'Avg': ['mean', 'median']})
+    
+    # Calculate lower and upper quartiles
+    quartiles = grouped_df['Avg'].quantile([0.25, 0.75]).unstack().rename(columns={0.25: 'Q1', 0.75: 'Q3'})
+    
+    # Merge the summary statistics and quartiles DataFrames
+    new_df = pd.merge(summary_stats, quartiles, on=['Year', 'Subject', 'Course'])
+
     new_df = (
-        df
-        .drop(columns=['Section', 'Session'])  # Drop unnecessary columns
-        .groupby(['Year', 'Subject', 'Course'], as_index=False)  # Group data by year, subject, course, title, and professor
-        .agg({
-            'Avg': ['mean', 'median', 'quantile'],  # Calculate the mean, median, and quantiles of the average grades
-        })
-        .round(0)  # Round the summary statistics to the nearest whole number
+        new_df.round(0)  # Round the summary statistics to the nearest whole number
         .sort_values(by=['Year', 'Subject', 'Course'])  # Sort the DataFrame by year, subject, and course
         .reset_index(drop=True)  # Reset the index
-        .rename(columns={'Avg': 'Average'})  # Rename the "Avg" column to "Average"
     )
-    
-    # Calculate the lower and upper quartiles
-    new_df[('Average', 'Q1')] = new_df[('Average', 'quantile')].apply(lambda x: x(0.25))
-    new_df[('Average', 'Q3')] = new_df[('Average', 'quantile')].apply(lambda x: x(0.75))
-
-    # Drop the 'quantile' column
-    new_df = new_df.drop(columns=[('Average', 'quantile')])
+    new_df.columns = ['Year', 'Subject', 'Course', 'Average_mean', 'Average_median', 'Average_Q1', 'Average_Q3']
 
     return new_df
-
