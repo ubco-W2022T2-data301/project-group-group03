@@ -2,28 +2,20 @@ import pandas as pd
 import numpy as np
 
 def load_and_process(file_path, columns_to_drop):
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path)  # Read the CSV file
     
-    # Drop unnecessary columns
-    df = df.drop(columns=columns_to_drop)
-    
-    # Group data by year, campus, subject, and course and calculate the new columns based on the 'Avg' column
     processed_data = (
         df
-        .groupby(['Year', 'Campus', 'Subject', 'Course'])
+        .query('Year >= 2018 & Year <= 2021')  # Filter data for years 2018-2021
+        .drop(columns=columns_to_drop)  # Drop unnecessary columns
+        .groupby(['Year', 'Campus', 'Subject', 'Course'])  # Group data by year, campus, subject, and course
         .agg({
-            'Avg': ['mean', 'median'],
-            'Avg': [('Avg_Median', 'median'), ('Percentile_25', lambda x: x.quantile(0.25)), ('Percentile_75', lambda x: x.quantile(0.75))],
+            'Avg': ['mean', 'median'],  # Calculate the mean and median of the average grades
+            '<50': lambda x: sum(x) / len(x)  # Calculate the failure rate
         })
-        .round(0)
-        .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])
-        .reset_index()
-        .fillna(0)
+        .round(0)  # Round the summary statistics to the nearest whole number
+        .sort_values(by=['Year', 'Campus', 'Subject', 'Course'])  # Sort the DataFrame by year, campus, subject, and course
+        .reset_index()  # Reset the index
+        .fillna(0)  # Replace NaN values with 0
     )
-    
-    # Flatten multi-level column names
-    processed_data.columns = ['_'.join(col).rstrip('_') for col in processed_data.columns.values]
-    
     return processed_data
-
-
