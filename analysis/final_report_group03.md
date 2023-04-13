@@ -17,6 +17,8 @@
 
 ![Graph 1](images/analysis1image4.png)
 
+## link to our analysis [View the detailed analysis in our Jupyter Notebook](./notebooks/analysis1.ipynb)
+## link to our analysis [View the detailed analysis in our Jupyter Notebook](./analysis/analysis2.ipynb)
 
 
 ### Question 1 + Answer 1
