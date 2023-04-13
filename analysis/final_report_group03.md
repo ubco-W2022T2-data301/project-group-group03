@@ -17,6 +17,8 @@
 
 ![Graph 1](images/analysis1image4.png)
 
+
+
 ### Question 1 + Answer 1
 ##### For my EDA: I chose the question What effects can we visualize from the transition of in-person to online/hybrid then back to inperson/hybrid courses during the COVID-19 pandemic impact the grade distribution of individual courses? 
 
@@ -26,3 +28,6 @@
 ### Summary:
 
 ##### During the course of this project, we have learned a great deal from the data we have analyzed. From our analysis it does appear that there was a decrease in performace from online learning to hybrid/in person classes. The scope of this project, however is unable to pinpoint the exact cause(s). To acheive conclusion resutls of the cause the of the change in grades would require a much more complex analysis and require the conduction of your own data, research, and studies. This EDA, did however allow give us a broad analysis of the effects the precarious past couple years has had on academic performance.
+
+
+
