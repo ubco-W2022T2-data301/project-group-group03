@@ -23,6 +23,7 @@
 
 
 ### NOAH CHAN 
+##### By examining the graph of the average grades of the two campuses over time, we can observe that both campuses experienced a significant increase in grades in 2020, followed by a decrease in 2021. This pattern suggests that the impact of online learning on student performance was consistent across both campuses. This finding is important because it suggests that the results of our analysis could be applicable to other institutions that have implemented online learning as a result of the COVID-19 pandemic as the consistency was shown.
 ![Plot_1](images/analysis3image1.png)
 
 ##### This shows the average grades of students in ECON, PHIL, and POLI over time, provides additional insights into the impact of online learning on student performance in specific academic disciplines. The graph shows that all three subjects had a higher average in 2020, which suggests that these courses may have benefited from online learning (at least in the short term). 
@@ -33,7 +34,6 @@
 
 ![Plot_3](images/analysis3image3.png)
 
-#### Based on our visualizations, we can conclude that online learning had a positive impact on student performance in the short term. We observed a significant increase in grades across different academic disciplines and campuses when online learning was implemented. However, we also observed a decrease in grades when classes returned to normal or a hybrid online/in-person format. This suggests that the effectiveness of online learning may be affected by the mode of instruction.
 
 ### Question 1 + Answer 1
 ##### For my EDA: I chose the question What effects can we visualize from the transition of in-person to online/hybrid then back to inperson/hybrid courses during the COVID-19 pandemic impact the grade distribution of individual courses? 
@@ -45,7 +45,7 @@
 ### Question 3 + Answer 3
 ##### For my EDA: What is the impact of changes in course format (e.g., online, in-person, hybrid) on student course selection and academic performance in higher education?
 
-##### By examining the graph of the average grades of the two campuses over time, we can observe that both campuses experienced a significant increase in grades in 2020, followed by a decrease in 2021. This pattern suggests that the impact of online learning on student performance was consistent across both campuses. This finding is important because it suggests that the results of our analysis could be applicable to other institutions that have implemented online learning as a result of the COVID-19 pandemic as the consistency was shown.
+#### Based on thevisualizations, I can conclude that online learning had a positive impact on student performance in the short term. I observed a significant increase in grades across different academic disciplines and campuses when online learning was implemented. However, I also observed a decrease in grades when classes returned to normal or a hybrid online/in-person format. This suggests that the effectiveness of online learning may be affected by the mode of instruction.
 
 ### Summary:
 
